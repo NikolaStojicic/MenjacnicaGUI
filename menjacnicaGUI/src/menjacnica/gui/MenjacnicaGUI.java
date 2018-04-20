@@ -55,9 +55,9 @@ public class MenjacnicaGUI extends JFrame {
 	private JScrollPane scrollPane_1;
 	private JTable table;
 	private JPopupMenu popupMenu;
-	private JMenuItem mntmOpen_1;
-	private JMenuItem mntmSave_1;
-	private JMenuItem mntmExit_1;
+	private JMenuItem mntmDodajKurs;
+	private JMenuItem mntmObrisiKurs;
+	private JMenuItem mntmIzvrsiZamenu;
 
 	/**
 	 * Launch the application.
@@ -193,6 +193,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
+			btnDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					prikaziDodajKursGUI();
+				}
+			});
 			btnDodajKurs.setPreferredSize(new Dimension(115, 25));
 		}
 		return btnDodajKurs;
@@ -267,9 +272,9 @@ public class MenjacnicaGUI extends JFrame {
 	private JPopupMenu getPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(getMenuItem_8());
-			popupMenu.add(getMenuItem_9());
-			popupMenu.add(getMenuItem_10());
+			popupMenu.add(getMntmDodajKurs());
+			popupMenu.add(getMntmObrisiKurs());
+			popupMenu.add(getMntmIzvrsiZamenu());
 		}
 		return popupMenu;
 	}
@@ -292,49 +297,6 @@ public class MenjacnicaGUI extends JFrame {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
-	}
-
-	private JMenuItem getMenuItem_8() {
-		if (mntmOpen_1 == null) {
-			mntmOpen_1 = new JMenuItem("Open");
-			mntmOpen_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					ucitaj();
-				}
-			});
-			mntmOpen_1.setIcon(new ImageIcon(
-					MenjacnicaGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
-			mntmOpen_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-		}
-		return mntmOpen_1;
-	}
-
-	private JMenuItem getMenuItem_9() {
-		if (mntmSave_1 == null) {
-			mntmSave_1 = new JMenuItem("Save");
-			mntmSave_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					sacuvaj();
-				}
-			});
-			mntmSave_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-			mntmSave_1.setIcon(new ImageIcon(
-					MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
-		}
-		return mntmSave_1;
-	}
-
-	private JMenuItem getMenuItem_10() {
-		if (mntmExit_1 == null) {
-			mntmExit_1 = new JMenuItem("Exit");
-			mntmExit_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					izlaz();
-				}
-			});
-			mntmExit_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
-		}
-		return mntmExit_1;
 	}
 
 	private void izlaz() {
@@ -386,5 +348,51 @@ public class MenjacnicaGUI extends JFrame {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	public void prikaziDodajKursGUI() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DodajKursGUI frame = new DodajKursGUI(textPane);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private JMenuItem getMntmDodajKurs() {
+		if (mntmDodajKurs == null) {
+			mntmDodajKurs = new JMenuItem("Dodaj kurs");
+			mntmDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					prikaziDodajKursGUI();
+				}
+			});
+		}
+		return mntmDodajKurs;
+	}
+
+	private JMenuItem getMntmObrisiKurs() {
+		if (mntmObrisiKurs == null) {
+			mntmObrisiKurs = new JMenuItem("Obrisi kurs");
+		}
+		return mntmObrisiKurs;
+	}
+
+	private JMenuItem getMntmIzvrsiZamenu() {
+		if (mntmIzvrsiZamenu == null) {
+			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
+		}
+		return mntmIzvrsiZamenu;
+	}
+
+	public static void azurirajStatus(JTextPane textPane, String text) {
+		if (textPane.getText().equals(""))
+			textPane.setText(text);
+		else
+			textPane.setText(textPane.getText() + "\n" + text);
 	}
 }
