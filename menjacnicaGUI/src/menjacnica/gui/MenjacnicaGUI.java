@@ -174,6 +174,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMenuItem_7() {
 		if (mntmExit == null) {
 			mntmExit = new JMenuItem("Exit");
+			mntmExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					izlaz();
+				}
+			});
 			mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
 		}
 		return mntmExit;
@@ -219,6 +224,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzvriZamenu() {
 		if (btnIzvriZamenu == null) {
 			btnIzvriZamenu = new JButton("Izvr\u0161i zamenu");
+			btnIzvriZamenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					prikaziIzvrsiZamenuGUI();
+				}
+			});
 			btnIzvriZamenu.setPreferredSize(new Dimension(115, 25));
 		}
 		return btnIzvriZamenu;
@@ -395,6 +405,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmIzvrsiZamenu() {
 		if (mntmIzvrsiZamenu == null) {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
+			mntmIzvrsiZamenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					prikaziIzvrsiZamenuGUI();
+				}
+			});
 		}
 		return mntmIzvrsiZamenu;
 	}
@@ -418,4 +433,18 @@ public class MenjacnicaGUI extends JFrame {
 			}
 		});
 	}
+
+	public void prikaziIzvrsiZamenuGUI() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					IzvrsiZamenuGUI frame = new IzvrsiZamenuGUI(textPane);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 }
