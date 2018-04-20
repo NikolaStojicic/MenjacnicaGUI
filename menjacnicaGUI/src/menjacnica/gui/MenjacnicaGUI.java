@@ -131,6 +131,12 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMenuItem_4() {
 		if (mntmAbout == null) {
 			mntmAbout = new JMenuItem("About");
+			mntmAbout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(null, "Aplikacija Menjacnica, autor Nikola Stojicic 270/16", "About",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			});
 		}
 		return mntmAbout;
 	}
@@ -153,6 +159,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMenuItem_6() {
 		if (mntmSave == null) {
 			mntmSave = new JMenuItem("Save");
+			mntmSave.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					sacuvaj();
+				}
+			});
 			mntmSave.setIcon(
 					new ImageIcon(MenjacnicaGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/floppy.gif")));
 			mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
@@ -206,7 +217,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JPanel getPanel_1_1() {
 		if (panel_1 == null) {
 			panel_1 = new JPanel();
-			panel_1.setPreferredSize(new Dimension(10, 50));
+			panel_1.setPreferredSize(new Dimension(10, 80));
 			panel_1.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 			panel_1.add(getScrollPane());
@@ -301,6 +312,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMenuItem_9() {
 		if (mntmSave_1 == null) {
 			mntmSave_1 = new JMenuItem("Save");
+			mntmSave_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					sacuvaj();
+				}
+			});
 			mntmSave_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 			mntmSave_1.setIcon(new ImageIcon(
 					MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
@@ -322,8 +338,8 @@ public class MenjacnicaGUI extends JFrame {
 	}
 
 	private void izlaz() {
-		int opcija = JOptionPane.showConfirmDialog(null, "Da li zelite da izadjete?", "Izlazak",
-				JOptionPane.YES_NO_OPTION);
+		int opcija = JOptionPane.showConfirmDialog(null, "Da li zelite da izadjete iz programa?", "Izlazak",
+				JOptionPane.YES_NO_CANCEL_OPTION);
 
 		if (opcija == JOptionPane.YES_OPTION)
 			System.exit(0);
@@ -338,9 +354,34 @@ public class MenjacnicaGUI extends JFrame {
 			File f = fc.getSelectedFile();
 			try {
 				if (textPane.getText().equals(""))
-					textPane.setText(f.getAbsolutePath().toString());
+					textPane.setText("Ucitan fajl: " + f.getName() + ", gde: " + f.getAbsolutePath().toString()
+							+ ", predstavlja putanju na disku do fajla kojeg je korisnik izabrao.");
 				else
-					textPane.setText(textPane.getText() + "\n" + f.getAbsolutePath().toString());
+					textPane.setText(textPane.getText() + "\nUcitan fajl: " + f.getName() + ", gde: "
+							+ f.getAbsolutePath().toString()
+							+ ", predstavlja putanju na disku do fajla kojeg je korisnik izabrao.");
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	public void sacuvaj() {
+		JFileChooser fc = new JFileChooser();
+
+		int opcija = fc.showSaveDialog(null);
+
+		if (opcija == JFileChooser.APPROVE_OPTION) {
+			File f = fc.getSelectedFile();
+
+			try {
+				if (textPane.getText().equals(""))
+					textPane.setText("Sacuvan fajl: " + f.getName() + ", gde: " + f.getAbsolutePath().toString()
+							+ ", predstavlja putanju na disku do fajla kojeg je korisnik izabrao.");
+				else
+					textPane.setText(textPane.getText() + "\nSacuvan fajl: " + f.getName() + ", gde: "
+							+ f.getAbsolutePath().toString()
+							+ ", predstavlja putanju na disku do fajla kojeg je korisnik izabrao.");
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
 			}
