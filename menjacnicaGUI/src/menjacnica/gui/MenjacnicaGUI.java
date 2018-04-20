@@ -76,7 +76,7 @@ public class MenjacnicaGUI extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frames.
 	 */
 
 	public MenjacnicaGUI() {
